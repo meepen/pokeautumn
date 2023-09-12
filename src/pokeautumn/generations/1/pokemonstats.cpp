@@ -5,7 +5,7 @@
 using namespace pokeautumn;
 using namespace pokeautumn::Generation1;
 
-const std::map<const Species, const SpeciesData> Generation1::pokemonData{
+const std::map<const Species, const SpeciesData> Generation1::pokemonData {
   {
     Species::BULBASAUR,
     {
