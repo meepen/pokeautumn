@@ -42,8 +42,8 @@ int main(int argc, char* argv[]) {
     },
   };
 
-  auto party1 = engine->CreateParty(Party({bulbasaurData}));
-  auto party2 = engine->CreateParty(Party({charmanderData}));
+  auto party1 = engine->CreateParty({bulbasaurData});
+  auto party2 = engine->CreateParty({charmanderData});
 
   std::cout << "CREATED PARTIES WOO!" << std::endl;
 
