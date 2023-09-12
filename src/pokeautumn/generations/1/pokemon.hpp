@@ -15,12 +15,13 @@ namespace pokeautumn::Generation1 {
   public:
     unsigned GetBaseStatValue(StatType stat) const override;
     unsigned GetStatValue(StatType stat) override;
+    std::array<Type, 2> GetTypes() const override;
 
     void SetHealth(unsigned health) override;
 
   private:
     Pokemon pokemon;
-    const PokemonBaseStats *baseStats;
+    const SpeciesData *speciesData;
     unsigned currentHealth;
   };
 }

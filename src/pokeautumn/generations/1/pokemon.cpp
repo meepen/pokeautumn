@@ -6,7 +6,7 @@ using namespace pokeautumn;
 using namespace pokeautumn::Generation1;
 
 Generation1Pokemon::Generation1Pokemon(Pokemon pokemon) : pokemon(pokemon) {
-  baseStats = &Generation1::pokemonData.at(pokemon.species);
+  speciesData = &Generation1::pokemonData.at(pokemon.species);
   currentHealth = GetBaseStatValue(StatType::HP);
 }
 
@@ -39,29 +39,29 @@ unsigned Generation1Pokemon::GetBaseStatValue(StatType stat) const {
         (pokemon.ivs.defense & 1) * 4 +
         (pokemon.ivs.speed & 1) * 2 +
         (pokemon.ivs.special_attack & 1);
-      baseStat = baseStats->hp;
+      baseStat = speciesData->baseStats.hp;
       
       break;
     case StatType::ATTACK:
       baseStatExperience = pokemon.evs.attack;
       individualValue = pokemon.ivs.attack;
-      baseStat = baseStats->attack;
+      baseStat = speciesData->baseStats.attack;
       break;
     case StatType::DEFENSE:
       baseStatExperience = pokemon.evs.defense;
       individualValue = pokemon.ivs.defense;
-      baseStat = baseStats->defense;
+      baseStat = speciesData->baseStats.defense;
       break;
     case StatType::SPEED:
       baseStatExperience = pokemon.evs.speed;
       individualValue = pokemon.ivs.speed;
-      baseStat = baseStats->speed;
+      baseStat = speciesData->baseStats.speed;
       break;
     case StatType::SPECIAL_ATTACK:
     case StatType::SPECIAL_DEFENSE:
       baseStatExperience = pokemon.evs.special_attack;
       individualValue = pokemon.ivs.special_attack;
-      baseStat = baseStats->special;
+      baseStat = speciesData->baseStats.special_attack;
       break;
   }
 
@@ -81,4 +81,8 @@ unsigned Generation1Pokemon::GetStatValue(StatType stat) {
 
 void Generation1Pokemon::SetHealth(unsigned health) {
   currentHealth = health;
+}
+
+std::array<Type, 2> Generation1Pokemon::GetTypes() const {
+  return speciesData->types;
 }

@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
 
   Pokemon bulbasaurData = {
     .species = Species::BULBASAUR,
-    .level = 99,
+    .level = 5,
     .ivs = {
       .defense = 15,
     },
