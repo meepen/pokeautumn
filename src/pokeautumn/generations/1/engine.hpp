@@ -5,7 +5,6 @@ namespace pokeautumn::Generation1 {
   class Generation1Engine : public Engine {
   public:
     Generation EngineGeneration() override { return Generation::GEN1; }
-    EngineParty CreateParty(Party party) override;
     std::unique_ptr<EnginePokemon> CreatePokemon(Pokemon pokemon) override;
   };
 

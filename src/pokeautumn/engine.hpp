@@ -15,7 +15,14 @@ namespace pokeautumn {
 
   public:
     virtual Generation EngineGeneration() = 0;
-    virtual EngineParty CreateParty(Party party) = 0;
+    EngineParty CreateParty(Party party) {
+      EngineParty engineParty;
+      for (auto &pokemon : party) {
+        engineParty.push_back(CreatePokemon(pokemon));
+      }
+      return engineParty;
+    }
+
     virtual std::unique_ptr<EnginePokemon> CreatePokemon(Pokemon pokemon) = 0;
   };
 }
