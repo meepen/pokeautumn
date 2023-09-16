@@ -1,6 +1,6 @@
 #pragma once
 
-#include "type.hpp"
+#include "data/type.hpp"
 
 namespace pokeautumn {
   class Move {

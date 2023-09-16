@@ -14,7 +14,7 @@ const std::map<const Species, const SpeciesData> Generation1::pokemonData {
         .attack = 49,
         .defense = 49,
         .speed = 45,
-        .special_attack = 65,
+        .special = 65,
       },
       .types = { Type::GRASS, Type::NONE },
     }
@@ -27,7 +27,7 @@ const std::map<const Species, const SpeciesData> Generation1::pokemonData {
         .attack = 62,
         .defense = 63,
         .speed = 60,
-        .special_attack = 80,
+        .special = 80,
       },
       .types = { Type::GRASS, Type::NONE },
     }
@@ -40,7 +40,7 @@ const std::map<const Species, const SpeciesData> Generation1::pokemonData {
         .attack = 82,
         .defense = 83,
         .speed = 80,
-        .special_attack = 100,
+        .special = 100,
       },
       .types = { Type::GRASS, Type::NONE },
     }
@@ -53,7 +53,7 @@ const std::map<const Species, const SpeciesData> Generation1::pokemonData {
         .attack = 52,
         .defense = 43,
         .speed = 65,
-        .special_attack = 50,
+        .special = 50,
       },
       .types = { Type::FIRE, Type::NONE },
     }
@@ -66,7 +66,7 @@ const std::map<const Species, const SpeciesData> Generation1::pokemonData {
         .attack = 64,
         .defense = 58,
         .speed = 80,
-        .special_attack = 65,
+        .special = 65,
       },
       .types = { Type::FIRE, Type::NONE },
     }
@@ -79,7 +79,7 @@ const std::map<const Species, const SpeciesData> Generation1::pokemonData {
         .attack = 84,
         .defense = 78,
         .speed = 100,
-        .special_attack = 85,
+        .special = 85,
       },
       .types = { Type::FIRE, Type::NONE },
     }
@@ -92,7 +92,7 @@ const std::map<const Species, const SpeciesData> Generation1::pokemonData {
         .attack = 48,
         .defense = 65,
         .speed = 43,
-        .special_attack = 50,
+        .special = 50,
       },
       .types = { Type::WATER, Type::NONE },
     }
@@ -105,7 +105,7 @@ const std::map<const Species, const SpeciesData> Generation1::pokemonData {
         .attack = 63,
         .defense = 80,
         .speed = 58,
-        .special_attack = 65,
+        .special = 65,
       },
       .types = { Type::WATER, Type::NONE },
     },
@@ -118,7 +118,7 @@ const std::map<const Species, const SpeciesData> Generation1::pokemonData {
         .attack = 83,
         .defense = 100,
         .speed = 78,
-        .special_attack = 85,
+        .special = 85,
       },
       .types = { Type::WATER, Type::NONE },
     }

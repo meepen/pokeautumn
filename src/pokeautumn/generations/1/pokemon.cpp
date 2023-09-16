@@ -1,5 +1,6 @@
 #include "pokemon.hpp"
 #include "pokemon/pokemon.hpp"
+#include "moves.hpp"
 #include <cmath>
 
 using namespace pokeautumn;
@@ -8,6 +9,12 @@ using namespace pokeautumn::Generation1;
 Generation1Pokemon::Generation1Pokemon(Pokemon pokemon) : pokemon(pokemon) {
   speciesData = &Generation1::pokemonData.at(pokemon.species);
   currentHealth = GetBaseStatValue(StatType::HP);
+  moves = {
+    Generation1::moveList.at(pokemon.moves[0]),
+    Generation1::moveList.at(pokemon.moves[1]),
+    Generation1::moveList.at(pokemon.moves[2]),
+    Generation1::moveList.at(pokemon.moves[3])
+  };
 }
 
 // https://www.smogon.com/ingame/guides/rby_gsc_stats

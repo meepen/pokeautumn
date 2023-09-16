@@ -15,6 +15,7 @@ namespace pokeautumn::Generation1 {
   public:
     unsigned GetBaseStatValue(StatType stat) const override;
     unsigned GetStatValue(StatType stat) override;
+    const std::array<const EngineMove *, 4> GetMoves() const override { return moves; }
     std::array<Type, 2> GetTypes() const override;
 
     void SetHealth(unsigned health) override;
@@ -23,5 +24,6 @@ namespace pokeautumn::Generation1 {
     Pokemon pokemon;
     const SpeciesData *speciesData;
     unsigned currentHealth;
+    std::array<const EngineMove *, 4> moves;
   };
 }

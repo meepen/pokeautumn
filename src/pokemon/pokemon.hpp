@@ -11,22 +11,28 @@ namespace pokeautumn {
     bool is_shiny = false;
 
     struct individual_values {
-      unsigned int attack : 4;
-      unsigned int defense : 4;
-      unsigned int speed : 4;
-      unsigned int special_attack : 4;
-      unsigned int hp : 4;
-      unsigned int special_defense : 4;
+      unsigned attack : 4;
+      unsigned defense : 4;
+      unsigned speed : 4;
+      union {
+        unsigned special_attack : 4;
+        unsigned special : 4;
+      };
+      unsigned hp : 4;
+      unsigned special_defense : 4;
     } ivs;
 
     /* in generation 1, effort values can go up to 65535 (uint16_max) */
     struct effort_values {
-      unsigned int hp : 16;
-      unsigned int attack : 16;
-      unsigned int defense : 16;
-      unsigned int speed : 16;
-      unsigned int special_attack : 16;
-      unsigned int special_defense : 16;
+      unsigned hp : 16;
+      unsigned attack : 16;
+      unsigned defense : 16;
+      unsigned speed : 16;
+      union {
+        unsigned special_attack : 16;
+        unsigned special : 16;
+      };
+      unsigned special_defense : 16;
     } evs;
 
     Move moves[4] = {

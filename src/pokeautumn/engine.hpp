@@ -12,11 +12,11 @@
 namespace pokeautumn {
   class Engine {
   public:
-    LIBPOKEAUTUMN_EXPORT static Engine *ForGeneration(Generation generation);
+    LIBPOKEAUTUMN_EXPORT static const Engine *ForGeneration(Generation generation);
 
   public:
-    virtual Generation EngineGeneration() = 0;
-    EngineParty CreateParty(Party party) {
+    virtual Generation EngineGeneration() const = 0;
+    EngineParty CreateParty(Party party) const {
       EngineParty engineParty;
       for (auto &pokemon : party) {
         engineParty.push_back(CreatePokemon(pokemon));
@@ -24,6 +24,6 @@ namespace pokeautumn {
       return engineParty;
     }
 
-    virtual std::unique_ptr<EnginePokemon> CreatePokemon(Pokemon pokemon) = 0;
+    virtual std::unique_ptr<EnginePokemon> CreatePokemon(Pokemon pokemon) const = 0;
   };
 }

@@ -7,7 +7,7 @@
 using namespace pokeautumn;
 using namespace pokeautumn::Generation1;
 
-std::unique_ptr<EnginePokemon> Generation1Engine::CreatePokemon(Pokemon pokemon) {
+std::unique_ptr<EnginePokemon> Generation1Engine::CreatePokemon(Pokemon pokemon) const {
   auto enginePokemon = std::unique_ptr<EnginePokemon>(
     new Generation1Pokemon(pokemon)
   );

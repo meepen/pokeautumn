@@ -1,8 +1,24 @@
 #pragma once
 
+#include "type.hpp"
+
 /* https://bulbapedia.bulbagarden.net/wiki/List_of_moves */
 
 namespace pokeautumn {
+  enum class MoveCategory : unsigned {
+    STATUS,
+    PHYSICAL,
+    SPECIAL,
+  };
+
+  struct MoveData {
+    unsigned power;
+    unsigned accuracy;
+    unsigned pp;
+    Type type;
+    MoveCategory category;
+  };
+
   enum class Move : unsigned {
     MOVE_NONE,
     MOVE_POUND,

@@ -6,7 +6,7 @@
 
 using namespace pokeautumn;
 
-Engine *Engine::ForGeneration(Generation generation) {
+const Engine *Engine::ForGeneration(Generation generation) {
   switch (generation) {
     case Generation::GEN1:
       return &Generation1::engine;
