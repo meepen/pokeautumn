@@ -1,5 +1,6 @@
 #pragma once
 
+#include "export.h"
 #include "pokemon/generation.hpp"
 #include "pokemon/party.hpp"
 #include "pokemon/pokemon.hpp"
@@ -11,7 +12,7 @@
 namespace pokeautumn {
   class Engine {
   public:
-    static Engine *ForGeneration(Generation generation);
+    LIBPOKEAUTUMN_EXPORT static Engine *ForGeneration(Generation generation);
 
   public:
     virtual Generation EngineGeneration() = 0;

@@ -20,33 +20,32 @@ static void dump_stats(std::unique_ptr<EnginePokemon> &pokemon) {
 int main(int argc, char* argv[]) {
   auto engine = Engine::ForGeneration(Generation::GEN1);
 
-  Pokemon bulbasaurData = {
-    .species = Species::BULBASAUR,
-    .level = 5,
-    .ivs = {
-      .defense = 15,
+  auto party1 = engine->CreateParty({
+    {
+      .species = Species::BULBASAUR,
+      .level = 5,
+      .ivs = {
+        .defense = 15,
+      },
+      .moves = {
+        Move::MOVE_TACKLE,
+      },
     },
-    .moves = {
-      Move::MOVE_TACKLE,
+  });
+  auto party2 = engine->CreateParty({
+    {
+      .species = Species::CHARMANDER,
+      .level = 5,
+      .ivs = {
+        .attack = 15,
+      },
+      .moves = {
+        Move::MOVE_SCRATCH,
+      },
     },
-  };
-
-  Pokemon charmanderData = {
-    .species = Species::CHARMANDER,
-    .level = 5,
-    .ivs = {
-      .attack = 15,
-    },
-    .moves = {
-      Move::MOVE_SCRATCH,
-    },
-  };
-
-  auto party1 = engine->CreateParty({bulbasaurData});
-  auto party2 = engine->CreateParty({charmanderData});
+  });
 
   std::cout << "CREATED PARTIES WOO!" << std::endl;
-
   std::cout << "Bulbasaur stats: " << std::endl;
   dump_stats(party1[0]);
 

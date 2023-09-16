@@ -1,0 +1,42 @@
+
+#ifndef LIBPOKEAUTUMN_EXPORT_H
+#define LIBPOKEAUTUMN_EXPORT_H
+
+#ifdef LIBPOKEAUTUMN_STATIC_DEFINE
+#  define LIBPOKEAUTUMN_EXPORT
+#  define LIBPOKEAUTUMN_NO_EXPORT
+#else
+#  ifndef LIBPOKEAUTUMN_EXPORT
+#    ifdef libpokeautumn_EXPORTS
+        /* We are building this library */
+#      define LIBPOKEAUTUMN_EXPORT __declspec(dllexport)
+#    else
+        /* We are using this library */
+#      define LIBPOKEAUTUMN_EXPORT __declspec(dllimport)
+#    endif
+#  endif
+
+#  ifndef LIBPOKEAUTUMN_NO_EXPORT
+#    define LIBPOKEAUTUMN_NO_EXPORT 
+#  endif
+#endif
+
+#ifndef LIBPOKEAUTUMN_DEPRECATED
+#  define LIBPOKEAUTUMN_DEPRECATED __declspec(deprecated)
+#endif
+
+#ifndef LIBPOKEAUTUMN_DEPRECATED_EXPORT
+#  define LIBPOKEAUTUMN_DEPRECATED_EXPORT LIBPOKEAUTUMN_EXPORT LIBPOKEAUTUMN_DEPRECATED
+#endif
+
+#ifndef LIBPOKEAUTUMN_DEPRECATED_NO_EXPORT
+#  define LIBPOKEAUTUMN_DEPRECATED_NO_EXPORT LIBPOKEAUTUMN_NO_EXPORT LIBPOKEAUTUMN_DEPRECATED
+#endif
+
+#if 0 /* DEFINE_NO_DEPRECATED */
+#  ifndef LIBPOKEAUTUMN_NO_DEPRECATED
+#    define LIBPOKEAUTUMN_NO_DEPRECATED
+#  endif
+#endif
+
+#endif /* LIBPOKEAUTUMN_EXPORT_H */
