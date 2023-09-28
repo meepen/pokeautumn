@@ -3,17 +3,28 @@
 #include <map>
 #include <vector>
 #include <memory>
+#include "pokemon/data/move.hpp"
 
 
 namespace pokeautumn {
   class EngineParty;
   class EnginePokemon;
-  class BattleField;
+  class EngineBattle;
 
-  class BattleFieldEventListener {
-    friend class BattleField;
+  enum class BattleType {
+    SINGLES,
+    DOUBLES_1V1,
+    DOUBLES_1V2,
+    DOUBLES_2V2,
+    TRIPLES_1V1,
+    TRIPLES_1V3,
+    TRIPLES_3V3,
+  };
+
+  class BattleEventListener {
+    friend class EngineBattle;
   protected:
-    virtual void SetBattleField(std::shared_ptr<BattleField> battleField) = 0;
+    virtual void SetBattleField(std::shared_ptr<EngineBattle> battleField) = 0;
 
   public: // Events
     // Called when a turn starts and moves are to be selected
@@ -35,9 +46,11 @@ namespace pokeautumn {
     unsigned target;
   };
 
-  class BattleField {
+  class EngineBattle {
   public:
+    EngineBattle(std::vector<std::shared_ptr<EngineParty>> parties) : parties(parties) {}
 
+  public:
     virtual const std::vector<std::shared_ptr<EngineParty>> GetParties() const {
       return parties;
     }
@@ -52,9 +65,25 @@ namespace pokeautumn {
     virtual std::shared_ptr<EnginePokemon> GetActivePokemon(unsigned slot) const {
       return activePokemon.at(slot);
     }
+    virtual unsigned GetSlot(std::shared_ptr<EnginePokemon> pokemon) const {
+      for (auto &pair : activePokemon) {
+        if (pair.second == pokemon) {
+          return pair.first;
+        }
+      }
+      return -1;
+    }
+    virtual unsigned GetSlot(EnginePokemon &pokemon) const {
+      for (auto &pair : activePokemon) {
+        if (pair.second.get() == &pokemon) {
+          return pair.first;
+        }
+      }
+      return -1;
+    }
     virtual unsigned GetTeam(unsigned slot) const {
       // Generally there's two teams, so this is a good default
-      return slot * 2 / parties.size();
+      return slot * 2 / (parties.size() + 1);
     }
 
   public: // Turn Management
@@ -63,10 +92,18 @@ namespace pokeautumn {
     virtual bool HasMoveReady(unsigned slot) const { return moves.find(slot) != moves.end(); }
     virtual BattleFieldMove GetMove(unsigned slot) const { return moves.at(slot); }
 
+  public: // Pokemon Management
+    virtual void OnFaint(EnginePokemon &pokemon) {
+      auto slot = GetSlot(pokemon);
+      for (auto &listener : listeners) {
+        listener->OnFaint(slot);
+      }
+    }
+
   protected:
     unsigned turn = 0;
     std::map<unsigned, BattleFieldMove> moves;
-    std::vector<std::shared_ptr<BattleFieldEventListener>> listeners;
+    std::vector<std::shared_ptr<BattleEventListener>> listeners;
 
     std::vector<std::shared_ptr<EngineParty>> parties;
     std::map<unsigned, std::shared_ptr<EnginePokemon>> activePokemon;

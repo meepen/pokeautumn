@@ -11,14 +11,6 @@ namespace pokeautumn {
     SPECIAL,
   };
 
-  struct MoveData {
-    unsigned power;
-    unsigned accuracy;
-    unsigned pp;
-    Type type;
-    MoveCategory category;
-  };
-
   enum class Move : unsigned {
     MOVE_NONE,
     MOVE_POUND,
@@ -191,5 +183,14 @@ namespace pokeautumn {
     /* Gen 2 */
 
     COUNT,
+  };
+
+  struct MoveData {
+    unsigned power;
+    unsigned accuracy;
+    unsigned pp;
+    Type type;
+    MoveCategory category;
+    Move move;
   };
 }

@@ -2,7 +2,7 @@
 
 #include "pokeautumn/generations/1/moves.hpp"
 #include "pokeautumn/enginemove.hpp"
-#include "pokeautumn/battlefield.hpp"
+#include "pokeautumn/enginebattle.hpp"
 #include "pokeautumn/enginepokemon.hpp"
 
 namespace pokeautumn::Generation1::Moves {
@@ -12,12 +12,10 @@ namespace pokeautumn::Generation1::Moves {
     .pp = 35,
     .type = Type::NORMAL,
     .category = MoveCategory::PHYSICAL,
+    .move = Move::MOVE_TACKLE,
   };
 
   class Tackle : public EngineMove {
-  public:
-    virtual bool Apply(EnginePokemon &user, EnginePokemon &target, BattleField &battleField) const override { return false; }
-
   public:
     virtual MoveData GetMoveData() const override { return tackleMoveData; }
   };

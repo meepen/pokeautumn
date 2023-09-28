@@ -6,6 +6,7 @@
 #include "pokemon/pokemon.hpp"
 
 #include "engineparty.hpp"
+#include "enginebattle.hpp"
 
 #include <memory>
 
@@ -16,14 +17,15 @@ namespace pokeautumn {
 
   public:
     virtual Generation EngineGeneration() const = 0;
-    EngineParty CreateParty(Party party) const {
-      EngineParty engineParty;
+    std::unique_ptr<EngineParty> CreateParty(Party party) const {
+      auto engineParty = std::make_unique<EngineParty>();
       for (auto &pokemon : party) {
-        engineParty.push_back(CreatePokemon(pokemon));
+        engineParty->push_back(CreatePokemon(pokemon));
       }
       return engineParty;
     }
 
     virtual std::unique_ptr<EnginePokemon> CreatePokemon(Pokemon pokemon) const = 0;
+    virtual std::unique_ptr<EngineBattle> CreateBattle(BattleType fieldType, std::vector<std::shared_ptr<EngineParty>> parties) const = 0;
   };
 }

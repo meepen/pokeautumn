@@ -1,9 +1,10 @@
 #pragma once
 
+#include <vector>
 #include <memory>
 
 #include "enginepokemon.hpp"
 
 namespace pokeautumn {
-  using EngineParty = std::vector<std::unique_ptr<EnginePokemon>>;
+  class EngineParty : public std::vector<std::shared_ptr<EnginePokemon>> {};
 }

@@ -1,7 +1,9 @@
+#include <cmath>
+
 #include "pokemon.hpp"
 #include "pokemon/pokemon.hpp"
 #include "moves.hpp"
-#include <cmath>
+#include "types.hpp"
 
 using namespace pokeautumn;
 using namespace pokeautumn::Generation1;
@@ -76,13 +78,16 @@ unsigned Generation1Pokemon::GetBaseStatValue(StatType stat) const {
   return (((baseStat + individualValue) * 2 + statPoint) * pokemon.level / 100) + baseStatValue;
 }
 
-unsigned Generation1Pokemon::GetStatValue(StatType stat) {
-  // TODO: in gen 1, badges affect stats (?!)
+unsigned Generation1Pokemon::GetStatValue(StatType stat) const {
   switch (stat) {
     case StatType::HP:
       return currentHealth;
+    case StatType::SPECIAL_DEFENSE:
+      stat = StatType::SPECIAL;
     default:
-      return GetBaseStatValue(stat);
+      return GetBaseStatValue(stat)
+        * (2 + std::max(0, statStages[static_cast<unsigned>(stat)]))
+        / (2 + std::max(0, -statStages[static_cast<unsigned>(stat)]));
   }
 }
 
@@ -92,4 +97,55 @@ void Generation1Pokemon::SetHealth(unsigned health) {
 
 std::array<Type, 2> Generation1Pokemon::GetTypes() const {
   return speciesData->types;
+}
+
+unsigned Generation1Pokemon::CalculateDamage(const EngineMove &move, const EnginePokemon &target) const {
+  // https://bulbapedia.bulbagarden.net/wiki/Damage
+  // Damage = ((2 * level * critical / 5 + 2) * power * attack / defense / 50 + 2) * STAB * Type1 * Type2 * random / 255
+  // STAB = 1.5 if move type is the same as the pokemon's type
+  // Type1 and Type2 are the effectiveness of the move against the pokemon's types
+  // critical = 2 if critical hit, 1 otherwise
+  // random = random number between 217 and 255 inclusive
+  // attack = attack stat if physical move, special stat if special move
+  // defense = defense stat if physical move, special stat if special move
+  // power = move power
+  // level = pokemon user's level
+
+  auto attack = move.IsPhysical()
+    ? GetStatValue(StatType::ATTACK)
+    : GetStatValue(StatType::SPECIAL);
+  auto defense = move.IsPhysical()
+    ? target.GetStatValue(StatType::DEFENSE)
+    : target.GetStatValue(StatType::SPECIAL);
+  auto power = move.Power();
+  auto level = pokemon.level;
+  
+  // TODO: critical (1.5 if move is critical)
+  unsigned critical = 1;
+
+  auto damage = ((2 * level * critical / 5 + 2) * power * attack / defense / 50 + 2);
+
+  if (move.GetType() == GetTypes()[0] || move.GetType() == GetTypes()[1]) {
+    damage = damage * 3 / 2;
+  }
+
+  damage = GetTypeEffectiveness(move.GetType(), target.GetTypes()) * damage;
+
+  // TODO: random
+  unsigned random = 255; // 217-255
+  damage = damage * random / 255;
+  
+  return damage;
+}
+
+void Generation1Pokemon::OnSentOut(std::shared_ptr<EnginePokemon> previous, const EngineMove *move) {
+  // if (move == nullptr || move->GetMove() != Move::MOVE_BATON_PASS) {
+  for (auto &statStage : statStages) {
+    statStage = 0;
+  }
+  // }
+}
+
+bool Generation1Pokemon::IsImmuneTo(const EngineMove &move) const {
+  return GetTypeEffectiveness(move.GetType(), GetTypes()).numerator == 0;
 }
